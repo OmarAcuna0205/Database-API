@@ -13,7 +13,7 @@ const resolvers = {
       const rows = await db.select().table('Sale');
       return rows.map(row => ({
         ...row,
-        date: new Date(row.date).toISOString().split('T')[0] // "YYYY-MM-DD"
+        date: new Date(row.date).toISOString().split('T')[0]
       }));
     },
 
@@ -47,47 +47,47 @@ const resolvers = {
   Mutation: {
     // -- Poets --
     addPoet: async (_, { first_name, surname, address, postcode, telephone_number }) => {
-      const [poet_code] = await db('Poet').insert({
-        first_name, surname, address, postcode, telephone_number
-      });
+      const [poet_code] = await db('Poet').insert({ first_name, surname, address, postcode, telephone_number });
       return await db('Poet').where({ poet_code }).first();
     },
 
     updatePoet: async (_, { poet_code, first_name, surname, address, postcode, telephone_number }) => {
-      await db('Poet').where({ poet_code }).update({
-        first_name, surname, address, postcode, telephone_number
-      });
+      await db('Poet').where({ poet_code }).update({ first_name, surname, address, postcode, telephone_number });
       return await db('Poet').where({ poet_code }).first();
+    },
+
+    deletePoet: async (_, { poet_code }) => {
+      return await db('Poet').where({ poet_code }).del();
     },
 
     // -- Poems --
     addPoem: async (_, { poem_title, poem_contents, poet_code }) => {
-      const [poem_code] = await db('Poem').insert({
-        poem_title, poem_contents, poet_code
-      });
+      const [poem_code] = await db('Poem').insert({ poem_title, poem_contents, poet_code });
       return await db('Poem').where({ poem_code }).first();
     },
 
     updatePoem: async (_, { poem_code, poem_title, poem_contents, poet_code }) => {
-      await db('Poem').where({ poem_code }).update({
-        poem_title, poem_contents, poet_code
-      });
+      await db('Poem').where({ poem_code }).update({ poem_title, poem_contents, poet_code });
       return await db('Poem').where({ poem_code }).first();
+    },
+
+    deletePoem: async (_, { poem_code }) => {
+      return await db('Poem').where({ poem_code }).del();
     },
 
     // -- Customers --
     addCustomer: async (_, { first_name, surname, address, postcode, telephone_number }) => {
-      const [customer_code] = await db('Customer').insert({
-        first_name, surname, address, postcode, telephone_number
-      });
+      const [customer_code] = await db('Customer').insert({ first_name, surname, address, postcode, telephone_number });
       return await db('Customer').where({ customer_code }).first();
     },
 
     updateCustomer: async (_, { customer_code, first_name, surname, address, postcode, telephone_number }) => {
-      await db('Customer').where({ customer_code }).update({
-        first_name, surname, address, postcode, telephone_number
-      });
+      await db('Customer').where({ customer_code }).update({ first_name, surname, address, postcode, telephone_number });
       return await db('Customer').where({ customer_code }).first();
+    },
+
+    deleteCustomer: async (_, { customer_code }) => {
+      return await db('Customer').where({ customer_code }).del();
     },
 
     // -- Sales --
@@ -109,6 +109,10 @@ const resolvers = {
       };
     },
 
+    deleteSale: async (_, { sale_code }) => {
+      return await db('Sale').where({ sale_code }).del();
+    },
+
     // -- Publications --
     addPublication: async (_, { title, price }) => {
       const [publication_code] = await db('Publication').insert({ title, price });
@@ -118,6 +122,10 @@ const resolvers = {
     updatePublication: async (_, { publication_code, title, price }) => {
       await db('Publication').where({ publication_code }).update({ title, price });
       return await db('Publication').where({ publication_code }).first();
+    },
+
+    deletePublication: async (_, { publication_code }) => {
+      return await db('Publication').where({ publication_code }).del();
     },
 
     // -- Poem_Publication --

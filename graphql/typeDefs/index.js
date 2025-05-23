@@ -65,14 +65,14 @@ const typeDefs = gql`
     customer_code: Int
     first_name: String
     surname: String
-}
+  }
 
   type PublicationPoem {
     publication_code: Int
     title: String
     poem_code: Int
     poem_title: String
-}
+  }
 
   # ---------- Consultas ----------
   type Query {
@@ -108,6 +108,10 @@ const typeDefs = gql`
       telephone_number: String
     ): Poet!
 
+    deletePoet(
+      poet_code: ID!
+    ): Int!
+
     # -- Poems --
     addPoem(
       poem_title: String!,
@@ -121,6 +125,10 @@ const typeDefs = gql`
       poem_contents: String,
       poet_code: Int
     ): Poem!
+
+    deletePoem(
+      poem_code: ID!
+    ): Int!
 
     # -- Customers --
     addCustomer(
@@ -140,6 +148,10 @@ const typeDefs = gql`
       telephone_number: String
     ): Customer!
 
+    deleteCustomer(
+      customer_code: ID!
+    ): Int!
+
     # -- Sales --
     addSale(
       date: String!,
@@ -154,6 +166,10 @@ const typeDefs = gql`
       customer_code: Int
     ): Sale!
 
+    deleteSale(
+      sale_code: ID!
+    ): Int!
+
     # -- Publications --
     addPublication(
       title: String!,
@@ -165,6 +181,10 @@ const typeDefs = gql`
       title: String,
       price: Float
     ): Publication!
+
+    deletePublication(
+      publication_code: ID!
+    ): Int!
 
     # -- Poem_Publication --
     addPoemPublication(
